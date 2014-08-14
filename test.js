@@ -1,8 +1,13 @@
 var test = require('tape'),
     tile = require('./');
 
+var tile1 = [5,10,10]
+var tile2 = [100,50,8]
+
 test('tile to geojson', function(t){
-  t.fail('not implmented');
+  var geojson = tile.tileToGeojson(tile1);
+  t.ok(geojson, 'get geojson representation of tile');
+  t.equal(geojson.geometry.type, 'Polygon');
   t.end();
 });
 

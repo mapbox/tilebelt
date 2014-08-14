@@ -1,6 +1,6 @@
-var bboxPolygon = require('turf-bbox-polygon')
-
 // a tile is an array [x,y,z]
+
+var bboxPolygon = require('turf-bbox-polygon')
 
 function tileToGeojson (tile) {
   var bbox = [tile2long(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2long(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
@@ -15,7 +15,6 @@ function tile2long(x,z) {
   var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
   return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
 }
-
 
 function getChildren (tile){
   return [
@@ -84,5 +83,6 @@ module.exports = {
   getParent: getParent,
   getSiblings: getSiblings,
   hasTile: hasTile,
-  hasSiblings: hasSiblings
+  hasSiblings: hasSiblings,
+  tilesEqual: tilesEqual
 }
