@@ -63,12 +63,15 @@ test('has tile', function(t){
 });
 
 test('get quadkey', function(t){
-    t.fail('not implmented');
+    var key = tilebelt.getQuadkey([11,3,8]);
+    t.equal(key, '00001033');
     t.end();
 });
 
 test('quadkey to tile', function(t){
-    t.fail('not implmented');
+    var quadkey = '00001033';
+    var tile = tilebelt.quadkeyToTile(quadkey);
+    t.equal(tile.length, 3);
     t.end();
 });
 

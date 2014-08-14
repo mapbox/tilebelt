@@ -79,14 +79,33 @@ function tilesEqual(tile1, tile2) {
 
 function getQuadkey(tile){
   var index = '';
-  for (var zoom = tile[2]; zoom > 0; zoom--) {
+  for (var z = tile[2]; z > 0; z--) {
       var b = 0;
-      var mask = 1 << (zoom - 1);
+      var mask = 1 << (z - 1);
       if ((tile[0] & mask) !== 0) b++;
       if ((tile[1] & mask) !== 0) b += 2;
       index += b.toString();
   }
   return index;
+}
+
+function quadkeyToTile(quadkey){
+	var x = 0;
+	var y = 0;
+	var z = quadkey.length;
+	for (var i = z; i >0 ; i--) {
+		var mask = 1 << (i-1) ;
+		var cell =  parseInt(quadkey.substring (z-i,1));
+		if ((cell & 1) !== 0)
+		{
+		    x = x + mask;
+		}
+		if ((cell & 2) !== 0)
+		{
+		    y = y + mask;
+		}
+	}
+	return [x, y, z];
 }
 
 module.exports = {
@@ -97,5 +116,6 @@ module.exports = {
 	hasTile: hasTile,
 	hasSiblings: hasSiblings,
 	tilesEqual: tilesEqual,
-	getQuadkey: getQuadkey
+	getQuadkey: getQuadkey,
+	quadkeyToTile: quadkeyToTile
 };
