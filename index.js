@@ -2,7 +2,7 @@
 
 var bboxPolygon = require('turf-bbox-polygon');
 
-function tileToGeojson (tile) {
+function getGeoJSON (tile) {
 	var bbox = [tile2long(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2long(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
 	var poly = bboxPolygon(bbox);
 	return poly;
@@ -77,12 +77,25 @@ function tilesEqual(tile1, tile2) {
 	);
 }
 
+function getQuadkey(tile){
+  var index = '';
+  for (var zoom = tile[2]; zoom > 0; zoom--) {
+      var b = 0;
+      var mask = 1 << (zoom - 1);
+      if ((tile[0] & mask) !== 0) b++;
+      if ((tile[1] & mask) !== 0) b += 2;
+      index += b.toString();
+  }
+  return index;
+}
+
 module.exports = {
-	tileToGeojson: tileToGeojson,
+	getGeoJSON: getGeoJSON,
 	getChildren: getChildren,
 	getParent: getParent,
 	getSiblings: getSiblings,
 	hasTile: hasTile,
 	hasSiblings: hasSiblings,
-	tilesEqual: tilesEqual
+	tilesEqual: tilesEqual,
+	getQuadkey: getQuadkey
 };
