@@ -5,7 +5,7 @@ var tile1 = [5,10,10];
 var tile2 = [100,50,8];
 
 test('tile to geojson', function(t) {
-    var geojson = tilebelt.getGeoJSON(tile1);
+    var geojson = tilebelt.tileToGeoJSON(tile1);
     t.ok(geojson, 'get geojson representation of tile');
     t.equal(geojson.geometry.type, 'Polygon');
     t.end();
@@ -63,7 +63,7 @@ test('has tile', function(t) {
 });
 
 test('get quadkey', function(t) {
-    var key = tilebelt.getQuadkey([11,3,8]);
+    var key = tilebelt.tileToQuadkey([11,3,8]);
     t.equal(key, '00001033');
     t.end();
 });
