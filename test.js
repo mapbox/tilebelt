@@ -22,7 +22,10 @@ test('get parent', function(t){
 });
 
 test('get siblings', function(t){
-    t.fail('not implmented');
+    var siblings = tilebelt.getSiblings(t);
+    t.ok(siblings);
+    t.equal(siblings.length, 4);
+    t.equal(siblings[0].length, 3);
     t.end();
 });
 
