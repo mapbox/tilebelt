@@ -35,3 +35,8 @@ test('quadkey to tile', function(t){
   t.fail('not implmented');
   t.end();
 });
+
+test('point to tile', function(t){
+  t.fail('not implmented');
+  t.end();
+});
