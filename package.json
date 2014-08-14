@@ -1,0 +1,30 @@
+{
+  "name": "tilebelt",
+  "version": "0.0.0",
+  "description": "simple tile utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapbox/tilebelt.git"
+  },
+  "keywords": [
+    "tile",
+    "map",
+    "geojson"
+  ],
+  "author": "morganherlocker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mapbox/tilebelt/issues"
+  },
+  "homepage": "https://github.com/mapbox/tilebelt",
+  "devDependencies": {
+    "tape": "^2.14.0"
+  },
+  "dependencies": {
+    "turf-bbox-polygon": "^0.1.5"
+  }
+}
