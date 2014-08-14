@@ -1,5 +1,6 @@
 tilebelt
 ====
+[![Build Status](https://travis-ci.org/mapbox/tilebelt.svg?branch=master)](https://travis-ci.org/mapbox/tilebelt)
 
 simple [tile](http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) utilities
 
