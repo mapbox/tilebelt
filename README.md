@@ -3,6 +3,21 @@ tilebelt
 
 simple [tile](http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) utilities
 
+##install
+```bash
+npm install tilebelt
+```
+
+##usage
+```js
+var tilebelt = require('tilebelt');
+
+var tile = [10,15,8] // x,y,z
+
+console.log(tilebelt.tileToGeoJSON(tile));
+console.log(tilebelt.getParent(tile));
+```
+
 function | description
 ---|---
 tileToGeoJSON(tile) | get a geojson representation of a tile
