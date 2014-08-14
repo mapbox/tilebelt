@@ -50,7 +50,15 @@ test('has siblings', function(t){
 });
 
 test('has tile', function(t){
-    t.fail('not implmented');
+    var tiles1 = [
+        [0,0,5],
+        [0,1,5],
+        [1,1,5],
+        [1,0,5]
+    ];
+
+    t.equals(tilebelt.hasSiblings([2,0,5], tiles1), false);
+    t.equals(tilebelt.hasSiblings([0,1,5], tiles1), true);
     t.end();
 });
 

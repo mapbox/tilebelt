@@ -1,11 +1,11 @@
 tilebelt
 ====
 
-simple tile utilities
+simple [tile](http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) utilities
 
 function | description
 ---|---
-getGeojson(tile) | get a geojson representation of a tile
+getGeoJSON(tile) | get a geojson representation of a tile
 getChildren(tile) | get the 4 tiles one zoom level higher
 getParent(tile) | get the tile one zoom level lower
 getSiblings(tile) | get the 3 sibling tiles for a tile
