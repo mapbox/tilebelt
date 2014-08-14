@@ -1,22 +1,37 @@
 // a tile is an array [x,y,z]
-
 var bboxPolygon = require('turf-bbox-polygon');
 
 function getGeoJSON (tile) {
-	var bbox = [tile2long(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2long(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
+	var bbox = [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
 	var poly = bboxPolygon(bbox);
 	return poly;
 }
 
-function tile2long(x,z) {
+function tile2lon(x, z) {
 	return (x/Math.pow(2,z)*360-180);
 }
- function tile2lat(y,z) {
+ function tile2lat(y, z) {
 	var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
 	return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
 }
 
-function getChildren (tile){
+function pointToTile(lon, lat, z) {
+	return [
+		long2tile(lon, z),
+		lat2tile(lat, z),
+		z
+	];
+}
+
+function long2tile(lon, z) { 
+  return (Math.floor((lon+180)/360*Math.pow(2, z))); 
+}
+
+function lat2tile(lat, z) { 
+  return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2, z))); 
+}
+
+function getChildren (tile) {
 	return [
 		[tile[0]*2, tile[1]*2, tile[2]+1],
 		[tile[0]*2+1, tile[1]*2, tile[2 ]+1],
@@ -25,17 +40,17 @@ function getChildren (tile){
 	];
 }
 
-function getParent (tile){
+function getParent (tile) {
 	// top left
-	if(tile[0]%2===0 && tile[1]%2===0){
+	if(tile[0]%2===0 && tile[1]%2===0) {
 		return [tile[0]/2, tile[1]/2, tile[2]-1];
 	}
 	// bottom left
-	else if((tile[0]%2===0) && (!tile[1]%2===0)){
+	else if((tile[0]%2===0) && (!tile[1]%2===0)) {
 		return [tile[0]/2, (tile[1]-1)/2, tile[2]-1];
 	}
 	// top right
-	else if((!tile[0]%2===0) && (tile[1]%2===0)){
+	else if((!tile[0]%2===0) && (tile[1]%2===0)) {
 		return [(tile[0]-1)/2, (tile[1])/2, tile[2]-1];
 	}
 	// bottom right
@@ -44,25 +59,25 @@ function getParent (tile){
 	}
 }
 
-function getSiblings (tile){
+function getSiblings (tile) {
 	return getChildren(getParent(tile));
 }
 
-function hasSiblings (tile, tiles){
+function hasSiblings (tile, tiles) {
 	var hasAll = true;
 	var siblings = getSiblings(tile);
-	siblings.forEach(function(sibling){
-		if(!hasTile(tiles, sibling)){
+	siblings.forEach(function(sibling) {
+		if(!hasTile(tiles, sibling)) {
 			hasAll = false;
 		}
 	});
 	return hasAll;
 }
 
-function hasTile(tiles, tile){
+function hasTile(tiles, tile) {
 	var tileFound = false;
-	tiles.forEach(function(t){
-		if(tilesEqual(t, tile)){
+	tiles.forEach(function(t) {
+		if(tilesEqual(t, tile)) {
 			tileFound = true;
 		}
 	});
@@ -77,7 +92,7 @@ function tilesEqual(tile1, tile2) {
 	);
 }
 
-function getQuadkey(tile){
+function getQuadkey(tile) {
   var index = '';
   for (var z = tile[2]; z > 0; z--) {
       var b = 0;
@@ -89,7 +104,7 @@ function getQuadkey(tile){
   return index;
 }
 
-function quadkeyToTile(quadkey){
+function quadkeyToTile(quadkey) {
 	var x = 0;
 	var y = 0;
 	var z = quadkey.length;
@@ -117,5 +132,6 @@ module.exports = {
 	hasSiblings: hasSiblings,
 	tilesEqual: tilesEqual,
 	getQuadkey: getQuadkey,
-	quadkeyToTile: quadkeyToTile
+	quadkeyToTile: quadkeyToTile,
+	pointToTile: pointToTile
 };
