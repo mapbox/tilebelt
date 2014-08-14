@@ -18,6 +18,7 @@ console.log(tilebelt.tileToGeoJSON(tile));
 console.log(tilebelt.getParent(tile));
 ```
 
+##features
 function | description
 ---|---
 tileToGeoJSON(tile) | get a geojson representation of a tile
