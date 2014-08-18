@@ -130,23 +130,6 @@ function quadkeyToTile(quadkey) {
         }
     }
     return [x,y,z];
-
-    /*var x = 0;
-    var y = 0;
-    var z = quadkey.length;
-    for (var i = z; i >0 ; i--) {
-        var mask = 1 << (i-1) ;
-        var cell =  parseInt(quadkey.substring (z-i));
-        if ((cell & 1) !== 0)
-        {
-            x = x + mask;
-        }
-        if ((cell & 2) !== 0)
-        {
-            y = y + mask;
-        }
-    }
-    return [x, y, z];*/
 }
 
 
