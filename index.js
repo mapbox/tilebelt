@@ -108,9 +108,35 @@ function quadkeyToTile(quadkey) {
     var x = 0;
     var y = 0;
     var z = quadkey.length;
+
+    for (var i = z; i > 0; i--) {
+        var mask = 1 << (i - 1);
+        switch (quadkey[z - i]) {
+            case '0':
+                break;
+
+            case '1':
+                x |= mask;
+                break;
+
+            case '2':
+                y |= mask;
+                break;
+
+            case '3':
+                x |= mask;
+                y |= mask;
+                break;
+        }
+    }
+    return [x,y,z];
+
+    /*var x = 0;
+    var y = 0;
+    var z = quadkey.length;
     for (var i = z; i >0 ; i--) {
         var mask = 1 << (i-1) ;
-        var cell =  parseInt(quadkey.substring (z-i,1));
+        var cell =  parseInt(quadkey.substring (z-i));
         if ((cell & 1) !== 0)
         {
             x = x + mask;
@@ -120,8 +146,9 @@ function quadkeyToTile(quadkey) {
             y = y + mask;
         }
     }
-    return [x, y, z];
+    return [x, y, z];*/
 }
+
 
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,

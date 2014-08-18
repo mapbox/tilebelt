@@ -82,3 +82,14 @@ test('point to tile', function(t) {
     t.end();
 });
 
+test('point and tile back and forth', function(t) {
+    var tile = tilebelt.pointToTile(10,10,10);
+    t.equal(tile.toString(), tilebelt.quadkeyToTile(tilebelt.tileToQuadkey(tile)).toString());
+    t.end();
+});
+
+test('check key 03', function(t) {
+    var quadkey = '03'
+    t.equal(tilebelt.quadkeyToTile(quadkey).toString(), [1,1,2].toString())
+    t.end();
+});
