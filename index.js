@@ -63,25 +63,19 @@ function getSiblings (tile) {
     return getChildren(getParent(tile));
 }
 
-function hasSiblings (tile, tiles) {
-    var hasAll = true;
+function hasSiblings(tile, tiles) {
     var siblings = getSiblings(tile);
-    siblings.forEach(function(sibling) {
-        if(!hasTile(tiles, sibling)) {
-            hasAll = false;
-        }
-    });
-    return hasAll;
+    for (var i = 0; i < siblings.length; i++) {
+        if (!hasTile(tiles, siblings[i])) return false;
+    }
+    return true;
 }
 
 function hasTile(tiles, tile) {
-    var tileFound = false;
-    tiles.forEach(function(t) {
-        if(tilesEqual(t, tile)) {
-            tileFound = true;
-        }
-    });
-    return tileFound;
+    for (var i = 0; i < tiles.length; i++) {
+        if (tilesEqual(tiles[i], tile)) return true;
+    }
+    return false;
 }
 
 function tilesEqual(tile1, tile2) {
