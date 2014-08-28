@@ -2,7 +2,7 @@
 var bboxPolygon = require('turf-bbox-polygon');
 
 var d2r = Math.PI / 180,
-    r2d = Math.PI / 180;
+    r2d = 180 / Math.PI;
 
 function tileToBBOX (tile) {
     return [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
