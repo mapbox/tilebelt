@@ -11,6 +11,18 @@ test('tile to geojson', function(t) {
     t.end();
 });
 
+test('tile to bbox', function(t) {
+    var ext = tilebelt.tileToBBOX(tile1);
+    t.ok(ext, 'get geojson representation of tile');
+    t.deepEqual(ext, [
+        -178.2421875,
+        0.02581278884167208,
+        -177.890625,
+        0.025802938066919013
+    ], 'extent');
+    t.end();
+});
+
 test('get parent', function(t) {
     var parent = tilebelt.getParent(tile1);
     t.ok(parent);

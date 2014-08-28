@@ -4,9 +4,12 @@ var bboxPolygon = require('turf-bbox-polygon');
 var d2r = Math.PI / 180,
     r2d = Math.PI / 180;
 
+function tileToBBOX (tile) {
+    return [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
+}
+
 function tileToGeoJSON (tile) {
-    var bbox = [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
-    var poly = bboxPolygon(bbox);
+    var poly = bboxPolygon(tileToBBOX(tile));
     return poly;
 }
 
@@ -127,6 +130,7 @@ function quadkeyToTile(quadkey) {
 
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
+    tileToBBOX: tileToBBOX,
     getChildren: getChildren,
     getParent: getParent,
     getSiblings: getSiblings,
