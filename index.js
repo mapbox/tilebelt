@@ -9,8 +9,7 @@ function tileToBBOX (tile) {
 }
 
 function tileToGeoJSON (tile) {
-    var poly = bboxPolygon(tileToBBOX(tile));
-    return poly;
+    return bboxPolygon(tileToBBOX(tile));
 }
 
 function tile2lon(x, z) {
