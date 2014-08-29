@@ -105,12 +105,15 @@ test('check key 03', function(t) {
 });
 
 test('bbox to tile', function(t) {
-    var bbox =  [-80.4144287109375,
-              32.61161640317033
-              ,-79.46411132812499,
-              33.2983949906164];
-    t.ok(tilebelt.bboxToTile(bbox), 'convert bbox to tile');
-    console.log(tilebelt.bboxToTile(bbox));
+    var bbox =  [-84.72656249999999,
+              11.178401873711785
+              ,-5.625,
+              61.60639637138628];
+    var tile = tilebelt.bboxToTile(bbox)
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 1);
+    t.equal(tile[1], 1);
+    t.equal(tile[2], 2);
     t.end();
 
 })

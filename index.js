@@ -133,9 +133,10 @@ function quadkeyToTile(quadkey) {
 }
 
 function bboxToTile(bboxCoords) {
-    var min = pointToTile(bboxCoords[0], bboxCoords[3], 30);
-    var max = pointToTile(bboxCoords[2], bboxCoords[1], 30);
+    var min = pointToTile(bboxCoords[0], bboxCoords[1], 32);
+    var max = pointToTile(bboxCoords[2], bboxCoords[3], 32);
     var bbox = [min[0], min[1], max[0], max[1]];
+
     var z = getBboxZoom(bbox);
     var x = bbox[0] >> (32 - z);
     var y = bbox[1] >> (32 - z);
@@ -143,7 +144,7 @@ function bboxToTile(bboxCoords) {
 }
 
 function getBboxZoom(bbox) {
-    var MAX_ZOOM = 1000;
+    var MAX_ZOOM = 28;
     for (var z = 0; z < MAX_ZOOM; z++) {
         var mask = 1 << (32 - (z + 1));
         if (((bbox[0] & mask) != (bbox[2] & mask)) ||
