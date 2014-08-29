@@ -123,11 +123,10 @@ test('bbox to tile -- dc', function(t) {
           38.899967510782346
               ,-77.03664779663086,
           38.90728142481329];
-    var tile = tilebelt.bboxToTile(bbox)
+    var tile = tilebelt.bboxToTile(bbox);
     t.ok(tile, 'convert bbox to tile');
     t.equal(tile[0], 9371);
     t.equal(tile[1], 12534);
     t.equal(tile[2], 15);
     t.end();
-
-})
+});
