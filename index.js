@@ -88,7 +88,7 @@ function tilesEqual(tile1, tile2) {
     return (
         tile1[0] === tile2[0] &&
         tile1[1] === tile2[1] &&
-        tile1[2] === tile2[2]
+        tile1[2] === tile2[2];
     );
 }
 
