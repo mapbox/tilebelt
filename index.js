@@ -132,6 +132,28 @@ function quadkeyToTile(quadkey) {
     return [x,y,z];
 }
 
+function bboxToTile(bboxCoords) {
+    var min = pointToTile(bboxCoords[0], bboxCoords[3], 30);
+    var max = pointToTile(bboxCoords[2], bboxCoords[1], 30);
+    var bbox = [min[0], min[1], max[0], max[1]];
+    var z = getBboxZoom(bbox);
+    var x = bbox[0] >> (32 - z);
+    var y = bbox[1] >> (32 - z);
+    return [x,y,z];
+}
+
+function getBboxZoom(bbox) {
+    var MAX_ZOOM = 1000;
+    for (var z = 0; z < MAX_ZOOM; z++) {
+        var mask = 1 << (32 - (z + 1));
+        if (((bbox[0] & mask) != (bbox[2] & mask)) ||
+            ((bbox[1] & mask) != (bbox[3] & mask))) {
+            return z;
+        }
+    }
+
+    return MAX_ZOOM;
+}
 
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
@@ -143,5 +165,6 @@ module.exports = {
     tilesEqual: tilesEqual,
     tileToQuadkey: tileToQuadkey,
     quadkeyToTile: quadkeyToTile,
-    pointToTile: pointToTile
+    pointToTile: pointToTile,
+    bboxToTile: bboxToTile
 };

@@ -94,8 +94,13 @@ test('check key 03', function(t) {
     t.end();
 });
 
-test('bbox to tile') {
-    var bbox =  [1,1,1.2,1.2];
+test('bbox to tile', function(t) {
+    var bbox =  [-80.4144287109375,
+              32.61161640317033
+              ,-79.46411132812499,
+              33.2983949906164];
     t.ok(tilebelt.bboxToTile(bbox), 'convert bbox to tile');
+    console.log(tilebelt.bboxToTile(bbox));
     t.end();
-}
+
+})
