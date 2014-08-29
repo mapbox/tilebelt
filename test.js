@@ -82,6 +82,16 @@ test('point to tile', function(t) {
     t.end();
 });
 
+test('point to tile verified', function(t) {
+    var tile = tilebelt.pointToTile(-77.03239381313323,38.91326516559442,10);
+    t.equal(tile.length, 3);
+    t.equal(tile[0], 292);
+    t.equal(tile[1], 391);
+    t.equal(tile[2], 10);
+    t.equal(tilebelt.tileToQuadkey(tile), '0320100322')
+    t.end();
+});
+
 test('point and tile back and forth', function(t) {
     var tile = tilebelt.pointToTile(10,10,10);
     t.equal(tile.toString(), tilebelt.quadkeyToTile(tilebelt.tileToQuadkey(tile)).toString());
