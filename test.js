@@ -89,7 +89,13 @@ test('point and tile back and forth', function(t) {
 });
 
 test('check key 03', function(t) {
-    var quadkey = '03'
-    t.equal(tilebelt.quadkeyToTile(quadkey).toString(), [1,1,2].toString())
+    var quadkey = '03';
+    t.equal(tilebelt.quadkeyToTile(quadkey).toString(), [1,1,2].toString());
     t.end();
 });
+
+test('bbox to tile') {
+    var bbox =  [1,1,1.2,1.2];
+    t.ok(tilebelt.bboxToTile(bbox), 'convert bbox to tile');
+    t.end();
+}
