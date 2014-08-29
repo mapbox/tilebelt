@@ -1,34 +1,34 @@
 // a tile is an array [x,y,z]
 var bboxPolygon = require('turf-bbox-polygon');
 
+var d2r = Math.PI / 180,
+    r2d = 180 / Math.PI;
+
+function tileToBBOX (tile) {
+    return [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
+}
+
 function tileToGeoJSON (tile) {
-    var bbox = [tile2lon(tile[0],tile[2]), tile2lat(tile[1],tile[2]), tile2lon(tile[0]+1,tile[2]), tile2lat(tile[1]+1,tile[2])];
-    var poly = bboxPolygon(bbox);
-    return poly;
+    return bboxPolygon(tileToBBOX(tile));
 }
 
 function tile2lon(x, z) {
     return (x/Math.pow(2,z)*360-180);
 }
- function tile2lat(y, z) {
+
+function tile2lat(y, z) {
     var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
-    return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
+    return (r2d*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
 }
 
 function pointToTile(lon, lat, z) {
+    var latr = lat*d2r,
+        z2 = Math.pow(2, z);
     return [
-        long2tile(lon, z),
-        lat2tile(lat, z),
+        (Math.floor((lon+180)/360*z2)),
+        (Math.floor((1-Math.log(Math.tan(latr) + 1/Math.cos(latr))/Math.PI)/2 *z2)),
         z
     ];
-}
-
-function long2tile(lon, z) { 
-    return (Math.floor((lon+180)/360*Math.pow(2, z))); 
-}
-
-function lat2tile(lat, z) { 
-    return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2, z))); 
 }
 
 function getChildren (tile) {
@@ -63,25 +63,19 @@ function getSiblings (tile) {
     return getChildren(getParent(tile));
 }
 
-function hasSiblings (tile, tiles) {
-    var hasAll = true;
+function hasSiblings(tile, tiles) {
     var siblings = getSiblings(tile);
-    siblings.forEach(function(sibling) {
-        if(!hasTile(tiles, sibling)) {
-            hasAll = false;
-        }
-    });
-    return hasAll;
+    for (var i = 0; i < siblings.length; i++) {
+        if (!hasTile(tiles, siblings[i])) return false;
+    }
+    return true;
 }
 
 function hasTile(tiles, tile) {
-    var tileFound = false;
-    tiles.forEach(function(t) {
-        if(tilesEqual(t, tile)) {
-            tileFound = true;
-        }
-    });
-    return tileFound;
+    for (var i = 0; i < tiles.length; i++) {
+        if (tilesEqual(tiles[i], tile)) return true;
+    }
+    return false;
 }
 
 function tilesEqual(tile1, tile2) {
@@ -158,6 +152,7 @@ function getBboxZoom(bbox) {
 
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
+    tileToBBOX: tileToBBOX,
     getChildren: getChildren,
     getParent: getParent,
     getSiblings: getSiblings,

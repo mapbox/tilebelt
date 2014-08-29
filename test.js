@@ -11,6 +11,15 @@ test('tile to geojson', function(t) {
     t.end();
 });
 
+test('tile to bbox', function(t) {
+    var ext = tilebelt.tileToBBOX(tile1);
+    t.ok(ext, 'get geojson representation of tile');
+    t.deepEqual(ext,
+    [ -178.2421875, 84.73838712095339, -177.890625, 84.7060489350415 ]
+    , 'extent');
+    t.end();
+});
+
 test('get parent', function(t) {
     var parent = tilebelt.getParent(tile1);
     t.ok(parent);
@@ -106,9 +115,9 @@ test('check key 03', function(t) {
 
 test('bbox to tile -- big', function(t) {
     var bbox =  [-84.72656249999999,
-              11.178401873711785
-              ,-5.625,
-              61.60639637138628];
+                11.178401873711785,
+                -5.625,
+                61.60639637138628];
     var tile = tilebelt.bboxToTile(bbox)
     t.ok(tile, 'convert bbox to tile');
     t.equal(tile[0], 1);
@@ -120,9 +129,9 @@ test('bbox to tile -- big', function(t) {
 
 test('bbox to tile -- dc', function(t) {
     var bbox =  [-77.04615354537964,
-          38.899967510782346
-              ,-77.03664779663086,
-          38.90728142481329];
+                38.899967510782346,
+                -77.03664779663086,
+                38.90728142481329];
     var tile = tilebelt.bboxToTile(bbox);
     t.ok(tile, 'convert bbox to tile');
     t.equal(tile[0], 9371);
