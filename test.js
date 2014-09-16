@@ -139,3 +139,13 @@ test('bbox to tile -- dc', function(t) {
     t.equal(tile[2], 15);
     t.end();
 });
+
+test('bbox to tile -- cross boundary', function(t) {
+    var bbox =  [-2, 3,1, 4];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 9371);
+    t.equal(tile[1], 12534);
+    t.equal(tile[2], 15);
+    t.end();
+});
