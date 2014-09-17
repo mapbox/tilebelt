@@ -139,3 +139,13 @@ test('bbox to tile -- dc', function(t) {
     t.equal(tile[2], 15);
     t.end();
 });
+
+test('bbox to tile -- crossing 0 lat/lng', function(t) {
+    var bbox = [-10, -10, 10, 10];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});

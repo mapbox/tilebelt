@@ -132,8 +132,9 @@ function bboxToTile(bboxCoords) {
     var bbox = [min[0], min[1], max[0], max[1]];
 
     var z = getBboxZoom(bbox);
-    var x = bbox[0] >> (32 - z);
-    var y = bbox[1] >> (32 - z);
+    if (z === 0) return [0,0,0];
+    var x = bbox[0] >>> (32 - z);
+    var y = bbox[1] >>> (32 - z);
     return [x,y,z];
 }
 
