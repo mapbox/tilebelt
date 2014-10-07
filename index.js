@@ -5,18 +5,10 @@ var d2r = Math.PI / 180,
     r2d = 180 / Math.PI;
 
 function tileToBBOX (tile) {
-    var w = tile2lon(tile[0],tile[2]);
-    var s = tile2lat(tile[1],tile[2]);
     var e = tile2lon(tile[0]+1,tile[2]);
-    var n = tile2lat(tile[1]+1,tile[2]);
-    if(s > n) {
-        s = tile2lat(tile[1]+1,tile[2]);
-        n = tile2lat(tile[1],tile[2]);
-    }
-    if(w > e) {
-        w = tile2lon(tile[0]+1,tile[2]);
-        e = tile2lon(tile[0],tile[2]);
-    }
+    var w = tile2lon(tile[0],tile[2]);    
+    var s = tile2lat(tile[1]+1,tile[2]);
+    var n = tile2lat(tile[1],tile[2]);
     return [w,s,e,n];
 }
 

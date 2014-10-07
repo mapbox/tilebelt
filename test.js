@@ -149,3 +149,26 @@ test('bbox to tile -- crossing 0 lat/lng', function(t) {
     t.equal(tile[2], 0);
     t.end();
 });
+
+test('tile to bbox -- verify bbox order', function(t) {
+    var tile =  [13, 11, 5];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [20, 11, 5];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [143, 121, 8];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [999, 1000, 17];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+    t.end()
+});
