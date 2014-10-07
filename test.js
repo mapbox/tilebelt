@@ -15,7 +15,7 @@ test('tile to bbox', function(t) {
     var ext = tilebelt.tileToBBOX(tile1);
     t.ok(ext, 'get geojson representation of tile');
     t.deepEqual(ext,
-    [ -178.2421875, 84.73838712095339, -177.890625, 84.7060489350415 ]
+    [ -178.2421875, 84.7060489350415, -177.890625, 84.73838712095339]
     , 'extent');
     t.end();
 });
@@ -148,4 +148,27 @@ test('bbox to tile -- crossing 0 lat/lng', function(t) {
     t.equal(tile[1], 0);
     t.equal(tile[2], 0);
     t.end();
+});
+
+test('tile to bbox -- verify bbox order', function(t) {
+    var tile =  [13, 11, 5];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [20, 11, 5];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [143, 121, 8];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+
+    var tile =  [999, 1000, 17];
+    var bbox = tilebelt.tileToBBOX(tile);
+    t.equal(bbox[0] < bbox[2], true, 'east is less than west');
+    t.equal(bbox[1] < bbox[3], true, 'south is less than north');
+    t.end()
 });
