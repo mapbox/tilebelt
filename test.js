@@ -191,6 +191,16 @@ test('bbox to tile -- barely crossing 0 lat/lng -- overflowing to ne', function(
     t.end();
 });
 
+test('bbox to tile -- barely crossing 0 lng -- overflowing to ne', function(t) {
+    var bbox = [-0.000001, 0.999999, 1000000, 1000001];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
 test('tile to bbox -- verify bbox order', function(t) {
     var tile =  [13, 11, 5];
     var bbox = tilebelt.tileToBBOX(tile);
