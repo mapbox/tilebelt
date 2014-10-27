@@ -25,7 +25,5 @@
     "tape": "^2.14.0",
     "benchmark": "~1.0.0"
   },
-  "dependencies": {
-    "turf-bbox-polygon": "^0.1.5"
-  }
+  "dependencies": {}
 }
