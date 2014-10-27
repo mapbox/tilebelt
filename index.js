@@ -141,8 +141,19 @@ function quadkeyToTile(quadkey) {
 }
 
 function bboxToTile(bboxCoords) {
-    var min = pointToTile(bboxCoords[0], bboxCoords[1], 32);
-    var max = pointToTile(bboxCoords[2], bboxCoords[3], 32);
+    // Truncate bounding box to extent of the globe.
+    var tiny = 1E-13;
+    var w = bboxCoords[0],
+        s = bboxCoords[1],
+        e = bboxCoords[2],
+        n = bboxCoords[3];
+    if (w <= -180) { w = tiny - 180; }
+    if (s <= -90) { s = tiny - 90; }
+    if (e >= 180) { e = 180 - tiny; }
+    if (n >= 90) { n = 90 - tiny; }
+
+    var min = pointToTile(w, s, 32);
+    var max = pointToTile(e, n, 32);
     var bbox = [min[0], min[1], max[0], max[1]];
 
     var z = getBboxZoom(bbox);

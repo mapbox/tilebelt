@@ -150,6 +150,57 @@ test('bbox to tile -- crossing 0 lat/lng', function(t) {
     t.end();
 });
 
+test('bbox to tile -- barely crossing 0 lat/lng', function(t) {
+    var offset = 1E-8
+    var bbox = [0-offset, 0-offset, 9, 9];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
+test('bbox to tile -- crossing 0 lat/lng -- overflowing to ne', function(t) {
+    var bbox = [-10, -10, 9999, 9990];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
+test('bbox to tile -- crossing 0 lat/lng -- overflowing to ne (9999)', function(t) {
+    var bbox = [-10, -10, 9999, 9999];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
+test('bbox to tile -- barely crossing 0 lat/lng -- overflowing to ne', function(t) {
+    var bbox = [-0.000001, -1.000001, 1000000, 999999];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
+test('bbox to tile -- barely crossing 0 lng -- overflowing to ne', function(t) {
+    var bbox = [-0.000001, 0.999999, 1000000, 1000001];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.equal(tile[0], 0);
+    t.equal(tile[1], 0);
+    t.equal(tile[2], 0);
+    t.end();
+});
+
 test('tile to bbox -- verify bbox order', function(t) {
     var tile =  [13, 11, 5];
     var bbox = tilebelt.tileToBBOX(tile);
