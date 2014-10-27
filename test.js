@@ -15,8 +15,8 @@ test('tile to bbox', function(t) {
     var ext = tilebelt.tileToBBOX(tile1);
     t.ok(ext, 'get geojson representation of tile');
     t.deepEqual(ext,
-    [ -178.2421875, 84.7060489350415, -177.890625, 84.73838712095339]
-    , 'extent');
+        [ -178.2421875, 84.7060489350415, -177.890625, 84.73838712095339],
+        'extent');
     t.end();
 });
 
@@ -97,7 +97,7 @@ test('point to tile verified', function(t) {
     t.equal(tile[0], 292);
     t.equal(tile[1], 391);
     t.equal(tile[2], 10);
-    t.equal(tilebelt.tileToQuadkey(tile), '0320100322')
+    t.equal(tilebelt.tileToQuadkey(tile), '0320100322');
     t.end();
 });
 
@@ -118,14 +118,13 @@ test('bbox to tile -- big', function(t) {
                 11.178401873711785,
                 -5.625,
                 61.60639637138628];
-    var tile = tilebelt.bboxToTile(bbox)
+    var tile = tilebelt.bboxToTile(bbox);
     t.ok(tile, 'convert bbox to tile');
     t.equal(tile[0], 1);
     t.equal(tile[1], 1);
     t.equal(tile[2], 2);
     t.end();
-
-})
+});
 
 test('bbox to tile -- dc', function(t) {
     var bbox =  [-77.04615354537964,
@@ -156,19 +155,19 @@ test('tile to bbox -- verify bbox order', function(t) {
     t.equal(bbox[0] < bbox[2], true, 'east is less than west');
     t.equal(bbox[1] < bbox[3], true, 'south is less than north');
 
-    var tile =  [20, 11, 5];
-    var bbox = tilebelt.tileToBBOX(tile);
+    tile =  [20, 11, 5];
+    bbox = tilebelt.tileToBBOX(tile);
     t.equal(bbox[0] < bbox[2], true, 'east is less than west');
     t.equal(bbox[1] < bbox[3], true, 'south is less than north');
 
-    var tile =  [143, 121, 8];
-    var bbox = tilebelt.tileToBBOX(tile);
+    tile =  [143, 121, 8];
+    bbox = tilebelt.tileToBBOX(tile);
     t.equal(bbox[0] < bbox[2], true, 'east is less than west');
     t.equal(bbox[1] < bbox[3], true, 'south is less than north');
 
-    var tile =  [999, 1000, 17];
-    var bbox = tilebelt.tileToBBOX(tile);
+    tile =  [999, 1000, 17];
+    bbox = tilebelt.tileToBBOX(tile);
     t.equal(bbox[0] < bbox[2], true, 'east is less than west');
     t.equal(bbox[1] < bbox[3], true, 'south is less than north');
-    t.end()
+    t.end();
 });
