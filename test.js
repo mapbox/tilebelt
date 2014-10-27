@@ -7,7 +7,7 @@ var tile2 = [100,50,8];
 test('tile to geojson', function(t) {
     var geojson = tilebelt.tileToGeoJSON(tile1);
     t.ok(geojson, 'get geojson representation of tile');
-    t.equal(geojson.geometry.type, 'Polygon');
+    t.equal(geojson.type, 'Polygon');
     t.end();
 });
 

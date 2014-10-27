@@ -1,6 +1,4 @@
 // a tile is an array [x,y,z]
-var bboxPolygon = require('turf-bbox-polygon');
-
 var d2r = Math.PI / 180,
     r2d = 180 / Math.PI;
 
@@ -13,7 +11,19 @@ function tileToBBOX (tile) {
 }
 
 function tileToGeoJSON (tile) {
-    return bboxPolygon(tileToBBOX(tile));
+    var bbox = tileToBBOX(tile);
+    var poly = {
+        type: 'Polygon',
+        coordinates: 
+            [
+                [bbox[0],bbox[1]],
+                [bbox[0], bbox[3]],
+                [bbox[2], bbox[3]],
+                [bbox[2], bbox[1]],
+                [bbox[0], bbox[1]]
+            ]
+    };
+    return poly;
 }
 
 function tile2lon(x, z) {
