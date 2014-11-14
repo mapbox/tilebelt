@@ -16,11 +16,13 @@ function tileToGeoJSON (tile) {
         type: 'Polygon',
         coordinates: 
             [
-                [bbox[0],bbox[1]],
-                [bbox[0], bbox[3]],
-                [bbox[2], bbox[3]],
-                [bbox[2], bbox[1]],
-                [bbox[0], bbox[1]]
+                [
+                    [bbox[0],bbox[1]],
+                    [bbox[0], bbox[3]],
+                    [bbox[2], bbox[3]],
+                    [bbox[2], bbox[1]],
+                    [bbox[0], bbox[1]]
+                ]
             ]
     };
     return poly;
