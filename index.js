@@ -167,6 +167,21 @@ function getBboxZoom(bbox) {
     return MAX_ZOOM;
 }
 
+function pointToTileFraction (lon, lat, z) {
+    var tile = pointToTile(lon, lat, z);
+    var bbox = tileToBBOX(tile);
+
+    var xTileOffset = bbox[2] - bbox[0];
+    var xPointOffset = lon - bbox[0];
+    var xPercentOffset = xPointOffset / xTileOffset;
+
+    var yTileOffset = bbox[1] - bbox[3];
+    var yPointOffset = lat - bbox[3];
+    var yPercentOffset = yPointOffset / yTileOffset;
+
+    return [tile[0]+xPercentOffset, tile[1]+yPercentOffset, z];
+}
+
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
     tileToBBOX: tileToBBOX,
@@ -179,5 +194,6 @@ module.exports = {
     tileToQuadkey: tileToQuadkey,
     quadkeyToTile: quadkeyToTile,
     pointToTile: pointToTile,
-    bboxToTile: bboxToTile
+    bboxToTile: bboxToTile,
+    pointToTileFraction: pointToTileFraction
 };

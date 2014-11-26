@@ -23,6 +23,7 @@ console.log(tilebelt.getParent(tile));
 function | description
 ---|---
 tileToGeoJSON(tile) | get a geojson representation of a tile
+tileToBBOX(tile) | get the bbox of a tile
 getChildren(tile) | get the 4 tiles one zoom level higher
 getParent(tile) | get the tile one zoom level lower
 getSiblings(tile) | get the 3 sibling tiles for a tile
@@ -32,6 +33,7 @@ tilesEqual(tile1, tile2) | check to see if two tiles are the same
 tileToQuadkey(tile) | get the quadkey for a tile
 quadkeyToTile(quadkey) | get the tile for a quadkey
 pointToTile(lon, lat, zoom) | get the tile for a point at a specified zoom level
+pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location for a point at a zoom level
 
 ##tests
 ```bash

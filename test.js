@@ -171,3 +171,12 @@ test('tile to bbox -- verify bbox order', function(t) {
     t.equal(bbox[1] < bbox[3], true, 'south is less than north');
     t.end();
 });
+
+test('pointToTileFraction', function(t) {
+    var tile = tilebelt.pointToTileFraction(-95.93965530395508,41.26000108568697,9);
+    t.ok(tile, 'convert point to tile fraction');
+    t.equal(tile[0], 119.552490234375);
+    t.equal(tile[1], 191.4701834281966);
+    t.equal(tile[2], 9);
+    t.end();
+});
