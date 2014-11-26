@@ -32,6 +32,7 @@ tilesEqual(tile1, tile2) | check to see if two tiles are the same
 tileToQuadkey(tile) | get the quadkey for a tile
 quadkeyToTile(quadkey) | get the tile for a quadkey
 pointToTile(lon, lat, zoom) | get the tile for a point at a specified zoom level
+pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location for a point at a zoom level
 
 ##tests
 ```bash
