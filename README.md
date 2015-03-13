@@ -24,6 +24,7 @@ function | description
 ---|---
 tileToGeoJSON(tile) | get a geojson representation of a tile
 tileToBBOX(tile) | get the bbox of a tile
+bboxToTile(bbox) | get the smallest tile to cover a bbox
 getChildren(tile) | get the 4 tiles one zoom level higher
 getParent(tile) | get the tile one zoom level lower
 getSiblings(tile) | get the 3 sibling tiles for a tile
