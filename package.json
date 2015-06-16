@@ -4,7 +4,7 @@
   "description": "simple tile utilities",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "tap test.js --cov"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/mapbox/tilebelt",
   "devDependencies": {
-    "tape": "^2.14.0",
-    "benchmark": "~1.0.0"
+    "benchmark": "~1.0.0",
+    "tap": "^1.2.0"
   },
   "dependencies": {}
 }

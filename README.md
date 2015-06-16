@@ -1,15 +1,17 @@
 tilebelt
 ====
-[![Build Status](https://travis-ci.org/mapbox/tilebelt.svg?branch=master)](https://travis-ci.org/mapbox/tilebelt)
+[![Build Status](https://travis-ci.org/mapbox/tilebelt.svg?branch=master)](https://travis-ci.org/mapbox/tilebelt) [![Coverage Status](https://coveralls.io/repos/mapbox/tilebelt/badge.svg?branch=use-tap)](https://coveralls.io/r/mapbox/tilebelt?branch=use-tap)
 
 simple [tile](http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) utilities
 
-##install
+## install
+
 ```bash
 npm install tilebelt
 ```
 
-##usage
+## usage
+
 ```js
 var tilebelt = require('tilebelt');
 
@@ -19,7 +21,8 @@ console.log(tilebelt.tileToGeoJSON(tile));
 console.log(tilebelt.getParent(tile));
 ```
 
-##features
+## features
+
 function | description
 ---|---
 tileToGeoJSON(tile) | get a geojson representation of a tile
@@ -36,7 +39,8 @@ quadkeyToTile(quadkey) | get the tile for a quadkey
 pointToTile(lon, lat, zoom) | get the tile for a point at a specified zoom level
 pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location for a point at a zoom level
 
-##tests
+## tests
+
 ```bash
 npm test
 ```

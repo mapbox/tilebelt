@@ -1,4 +1,4 @@
-var test = require('tape'),
+var test = require('tap').test,
     tilebelt = require('./');
 
 var tile1 = [5,10,10];
