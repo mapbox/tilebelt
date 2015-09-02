@@ -38,13 +38,10 @@ function tile2lat(y, z) {
 }
 
 function pointToTile(lon, lat, z) {
-    var latr = lat*d2r,
-        z2 = Math.pow(2, z);
-    return [
-        (Math.floor((lon+180)/360*z2)),
-        (Math.floor((1-Math.log(Math.tan(latr) + 1/Math.cos(latr))/Math.PI)/2 *z2)),
-        z
-    ];
+    var tile = pointToTileFraction(lon, lat, z);
+    tile[0] = Math.floor(tile[0]);
+    tile[1] = Math.floor(tile[1]);
+    return tile;
 }
 
 function getChildren (tile) {
@@ -167,19 +164,14 @@ function getBboxZoom(bbox) {
     return MAX_ZOOM;
 }
 
-function pointToTileFraction (lon, lat, z) {
-    var tile = pointToTile(lon, lat, z);
-    var bbox = tileToBBOX(tile);
-
-    var xTileOffset = bbox[2] - bbox[0];
-    var xPointOffset = lon - bbox[0];
-    var xPercentOffset = xPointOffset / xTileOffset;
-
-    var yTileOffset = bbox[1] - bbox[3];
-    var yPointOffset = lat - bbox[3];
-    var yPercentOffset = yPointOffset / yTileOffset;
-
-    return [tile[0]+xPercentOffset, tile[1]+yPercentOffset, z];
+function pointToTileFraction(lon, lat, z) {
+    var latr = lat*d2r,
+        z2 = Math.pow(2, z);
+    return [
+        (lon+180)/360*z2,
+        (1-Math.log(Math.tan(latr) + 1/Math.cos(latr))/Math.PI)/2 *z2,
+        z
+    ];
 }
 
 module.exports = {
