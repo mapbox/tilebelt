@@ -1,4 +1,4 @@
-var test = require('tape'),
+var test = require('tap').test,
     tilebelt = require('./');
 
 var tile1 = [5,10,10];
@@ -114,7 +114,7 @@ test('check key 03', function(t) {
 });
 
 test('bbox to tile -- big', function(t) {
-    var bbox =  [-84.72656249999999,
+    var bbox = [-84.72656249999999,
                 11.178401873711785,
                 -5.625,
                 61.60639637138628];
@@ -123,6 +123,17 @@ test('bbox to tile -- big', function(t) {
     t.equal(tile[0], 1);
     t.equal(tile[1], 1);
     t.equal(tile[2], 2);
+    t.end();
+});
+
+test('bbox to tile -- no area', function(t) {
+    var bbox = [-84,
+                11,
+                -84,
+                11];
+    var tile = tilebelt.bboxToTile(bbox);
+    t.ok(tile, 'convert bbox to tile');
+    t.deepEqual(tile, [71582788, 125964677, 28]);
     t.end();
 });
 
