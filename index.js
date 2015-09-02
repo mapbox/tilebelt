@@ -4,7 +4,7 @@ var d2r = Math.PI / 180,
 
 function tileToBBOX (tile) {
     var e = tile2lon(tile[0]+1,tile[2]);
-    var w = tile2lon(tile[0],tile[2]);    
+    var w = tile2lon(tile[0],tile[2]);
     var s = tile2lat(tile[1]+1,tile[2]);
     var n = tile2lat(tile[1],tile[2]);
     return [w,s,e,n];
@@ -14,7 +14,7 @@ function tileToGeoJSON (tile) {
     var bbox = tileToBBOX(tile);
     var poly = {
         type: 'Polygon',
-        coordinates: 
+        coordinates:
             [
                 [
                     [bbox[0],bbox[1]],
@@ -165,13 +165,11 @@ function getBboxZoom(bbox) {
 }
 
 function pointToTileFraction(lon, lat, z) {
-    var latr = lat*d2r,
-        z2 = Math.pow(2, z);
-    return [
-        (lon+180)/360*z2,
-        (1-Math.log(Math.tan(latr) + 1/Math.cos(latr))/Math.PI)/2 *z2,
-        z
-    ];
+    var sin = Math.sin(lat * d2r),
+        z2 = Math.pow(2, z),
+        x = z2 * (lon / 360 + 0.5),
+        y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
+    return [x, y, z];
 }
 
 module.exports = {
