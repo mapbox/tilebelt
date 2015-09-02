@@ -44,3 +44,9 @@ pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location f
 ```bash
 npm test
 ```
+
+## benchmarks
+
+```bash
+npm run bench
+```
