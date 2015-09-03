@@ -1,40 +1,39 @@
-// a tile is an array [x,y,z]
+'use strict';
+
 var d2r = Math.PI / 180,
     r2d = 180 / Math.PI;
 
-function tileToBBOX (tile) {
-    var e = tile2lon(tile[0]+1,tile[2]);
-    var w = tile2lon(tile[0],tile[2]);
-    var s = tile2lat(tile[1]+1,tile[2]);
-    var n = tile2lat(tile[1],tile[2]);
-    return [w,s,e,n];
+// a tile is an array [x,y,z]
+function tileToBBOX(tile) {
+    var e = tile2lon(tile[0] + 1, tile[2]);
+    var w = tile2lon(tile[0], tile[2]);
+    var s = tile2lat(tile[1] + 1, tile[2]);
+    var n = tile2lat(tile[1], tile[2]);
+    return [w, s, e, n];
 }
 
-function tileToGeoJSON (tile) {
+function tileToGeoJSON(tile) {
     var bbox = tileToBBOX(tile);
     var poly = {
         type: 'Polygon',
-        coordinates:
-            [
-                [
-                    [bbox[0],bbox[1]],
-                    [bbox[0], bbox[3]],
-                    [bbox[2], bbox[3]],
-                    [bbox[2], bbox[1]],
-                    [bbox[0], bbox[1]]
-                ]
-            ]
+        coordinates: [[
+            [bbox[0], bbox[1]],
+            [bbox[0], bbox[3]],
+            [bbox[2], bbox[3]],
+            [bbox[2], bbox[1]],
+            [bbox[0], bbox[1]]
+        ]]
     };
     return poly;
 }
 
 function tile2lon(x, z) {
-    return (x/Math.pow(2,z)*360-180);
+    return x / Math.pow(2, z) * 360 - 180;
 }
 
 function tile2lat(y, z) {
-    var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
-    return (r2d*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
+    var n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
+    return r2d * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
 }
 
 function pointToTile(lon, lat, z) {
@@ -44,35 +43,33 @@ function pointToTile(lon, lat, z) {
     return tile;
 }
 
-function getChildren (tile) {
+function getChildren(tile) {
     return [
-        [tile[0]*2, tile[1]*2, tile[2]+1],
-        [tile[0]*2+1, tile[1]*2, tile[2 ]+1],
-        [tile[0]*2+1, tile[1]*2+1, tile[2]+1],
-        [tile[0]*2, tile[1]*2+1, tile[2]+1],
+        [tile[0] * 2, tile[1] * 2, tile[2] + 1],
+        [tile[0] * 2 + 1, tile[1] * 2, tile[2 ] + 1],
+        [tile[0] * 2 + 1, tile[1] * 2 + 1, tile[2] + 1],
+        [tile[0] * 2, tile[1] * 2 + 1, tile[2] + 1]
     ];
 }
 
-function getParent (tile) {
+function getParent(tile) {
     // top left
-    if(tile[0]%2===0 && tile[1]%2===0) {
-        return [tile[0]/2, tile[1]/2, tile[2]-1];
+    if (tile[0] % 2 === 0 && tile[1] % 2 === 0) {
+        return [tile[0] / 2, tile[1] / 2, tile[2] - 1];
     }
     // bottom left
-    else if((tile[0]%2===0) && (!tile[1]%2===0)) {
-        return [tile[0]/2, (tile[1]-1)/2, tile[2]-1];
+    if ((tile[0] % 2 === 0) && (!tile[1] % 2 === 0)) {
+        return [tile[0] / 2, (tile[1] - 1) / 2, tile[2] - 1];
     }
     // top right
-    else if((!tile[0]%2===0) && (tile[1]%2===0)) {
-        return [(tile[0]-1)/2, (tile[1])/2, tile[2]-1];
+    if ((!tile[0] % 2 === 0) && (tile[1] % 2 === 0)) {
+        return [(tile[0] - 1) / 2, (tile[1]) / 2, tile[2] - 1];
     }
     // bottom right
-    else {
-        return [(tile[0]-1)/2, (tile[1]-1)/2, tile[2]-1];
-    }
+    return [(tile[0] - 1) / 2, (tile[1] - 1) / 2, tile[2] - 1];
 }
 
-function getSiblings (tile) {
+function getSiblings(tile) {
     return getChildren(getParent(tile));
 }
 
@@ -100,15 +97,15 @@ function tilesEqual(tile1, tile2) {
 }
 
 function tileToQuadkey(tile) {
-  var index = '';
-  for (var z = tile[2]; z > 0; z--) {
-      var b = 0;
-      var mask = 1 << (z - 1);
-      if ((tile[0] & mask) !== 0) b++;
-      if ((tile[1] & mask) !== 0) b += 2;
-      index += b.toString();
-  }
-  return index;
+    var index = '';
+    for (var z = tile[2]; z > 0; z--) {
+        var b = 0;
+        var mask = 1 << (z - 1);
+        if ((tile[0] & mask) !== 0) b++;
+        if ((tile[1] & mask) !== 0) b += 2;
+        index += b.toString();
+    }
+    return index;
 }
 
 function quadkeyToTile(quadkey) {
@@ -118,25 +115,15 @@ function quadkeyToTile(quadkey) {
 
     for (var i = z; i > 0; i--) {
         var mask = 1 << (i - 1);
-        switch (quadkey[z - i]) {
-            case '0':
-                break;
-
-            case '1':
-                x |= mask;
-                break;
-
-            case '2':
-                y |= mask;
-                break;
-
-            case '3':
-                x |= mask;
-                y |= mask;
-                break;
+        var q = +quadkey[z - i];
+        if (q === 1) x |= mask;
+        if (q === 2) y |= mask;
+        if (q === 3) {
+            x |= mask;
+            y |= mask;
         }
     }
-    return [x,y,z];
+    return [x, y, z];
 }
 
 function bboxToTile(bboxCoords) {
@@ -145,18 +132,18 @@ function bboxToTile(bboxCoords) {
     var bbox = [min[0], min[1], max[0], max[1]];
 
     var z = getBboxZoom(bbox);
-    if (z === 0) return [0,0,0];
+    if (z === 0) return [0, 0, 0];
     var x = bbox[0] >>> (32 - z);
     var y = bbox[1] >>> (32 - z);
-    return [x,y,z];
+    return [x, y, z];
 }
 
 function getBboxZoom(bbox) {
     var MAX_ZOOM = 28;
     for (var z = 0; z < MAX_ZOOM; z++) {
         var mask = 1 << (32 - (z + 1));
-        if (((bbox[0] & mask) != (bbox[2] & mask)) ||
-            ((bbox[1] & mask) != (bbox[3] & mask))) {
+        if (((bbox[0] & mask) !== (bbox[2] & mask)) ||
+            ((bbox[1] & mask) !== (bbox[3] & mask))) {
             return z;
         }
     }

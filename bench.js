@@ -1,8 +1,10 @@
+'use strict';
+
 var Benchmark = require('benchmark');
 var tilebelt = require('./');
 
-var tile1 = [5,10,10];
-var tile2 = [558004,363898,20];
+var tile1 = [5, 10, 10];
+var tile2 = [558004, 363898, 20];
 var quadkey1 = tilebelt.tileToQuadkey(tile1);
 var quadkey2 = tilebelt.tileToQuadkey(tile2);
 var bbox1 = tilebelt.tileToBBOX(tile1);
@@ -40,10 +42,10 @@ new Benchmark.Suite()
     tilebelt.tileToQuadkey(tile2);
 })
 .add('pointToTile#z10', function () {
-    tilebelt.pointToTile(0,0,10);
+    tilebelt.pointToTile(0, 0, 10);
 })
 .add('pointToTile#z20', function () {
-    tilebelt.pointToTile(1,1,20);
+    tilebelt.pointToTile(1, 1, 20);
 })
 .add('quadkeyToTile#quadkey1', function () {
     tilebelt.quadkeyToTile(quadkey1);
@@ -63,10 +65,10 @@ new Benchmark.Suite()
 .add('pointToTileFraction#tile2', function () {
     tilebelt.pointToTileFraction(558004.8, 363898.8, 20);
 })
-.on('error', function(event) {
+.on('error', function (event) {
     console.log(event.target.error);
 })
-.on('cycle', function(event) {
+.on('cycle', function (event) {
     console.log(String(event.target));
 })
 .run();
