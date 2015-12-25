@@ -156,6 +156,8 @@ function pointToTileFraction(lon, lat, z) {
         z2 = Math.pow(2, z),
         x = z2 * (lon / 360 + 0.5),
         y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
+    if (x >= z2) x = z2 - 1;
+    if (y >= z2) x = z2 - 1;
     return [x, y, z];
 }
 
