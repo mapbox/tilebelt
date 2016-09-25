@@ -39,6 +39,24 @@ quadkeyToTile(quadkey) | get the tile for a quadkey
 pointToTile(lon, lat, zoom) | get the tile for a point at a specified zoom level
 pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location for a point at a zoom level
 
+## TypeScript
+
+TypeScript implementation was added to the [DefinitelyTyped repository](https://github.com/DefinitelyTyped/DefinitelyTyped).
+
+**Install definition**
+
+Using DefinitelyTyped
+
+```bash
+$ typings install --save --global dt~tilebelt
+```
+
+Using Typescript 2.0
+
+```bash
+$ npm install --save @types/tilebelt
+```
+
 ## tests
 
 ```bash
