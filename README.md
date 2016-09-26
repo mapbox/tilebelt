@@ -43,16 +43,6 @@ pointToTileFraction(lon, lat, zoom) | get the precise fractional tile location f
 
 TypeScript implementation was added to the [DefinitelyTyped repository](https://github.com/DefinitelyTyped/DefinitelyTyped).
 
-**Install definition**
-
-Using DefinitelyTyped
-
-```bash
-$ typings install --save --global dt~tilebelt
-```
-
-Using Typescript 2.0
-
 ```bash
 $ npm install --save @types/tilebelt
 ```
