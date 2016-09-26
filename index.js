@@ -3,7 +3,16 @@
 var d2r = Math.PI / 180,
     r2d = 180 / Math.PI;
 
-// a tile is an array [x,y,z]
+/**
+ * Get the bbox of a tile
+ *
+ * @name tileToBBOX
+ * @param {Array<number>} tile
+ * @returns {Array<number>} bbox
+ * @example
+ * var bbox = tileToBBOX([5, 10, 10])
+ * //=bbox
+ */
 function tileToBBOX(tile) {
     var e = tile2lon(tile[0] + 1, tile[2]);
     var w = tile2lon(tile[0], tile[2]);
@@ -12,6 +21,16 @@ function tileToBBOX(tile) {
     return [w, s, e, n];
 }
 
+/**
+ * Get a geojson representation of a tile
+ *
+ * @name tileToGeoJSON
+ * @param {Array<number>} tile
+ * @returns {Feature<Polygon>}
+ * @example
+ * var poly = tileToGeoJSON([5, 10, 10])
+ * //=poly
+ */
 function tileToGeoJSON(tile) {
     var bbox = tileToBBOX(tile);
     var poly = {
@@ -36,6 +55,18 @@ function tile2lat(y, z) {
     return r2d * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
 }
 
+/**
+ * Get the tile for a point at a specified zoom level
+ *
+ * @name pointToTile
+ * @param {number} lon
+ * @param {number} lat
+ * @param {number} z
+ * @returns {Array<number>} tile
+ * @example
+ * var tile = pointToTile(1, 1, 20)
+ * //=tile
+ */
 function pointToTile(lon, lat, z) {
     var tile = pointToTileFraction(lon, lat, z);
     tile[0] = Math.floor(tile[0]);
@@ -43,6 +74,16 @@ function pointToTile(lon, lat, z) {
     return tile;
 }
 
+/**
+ * Get the 4 tiles one zoom level higher
+ *
+ * @name getChildren
+ * @param {Array<number>} tile
+ * @returns {Array<Array<number>>} tiles
+ * @example
+ * var tiles = getChildren([5, 10, 10])
+ * //=tiles
+ */
 function getChildren(tile) {
     return [
         [tile[0] * 2, tile[1] * 2, tile[2] + 1],
@@ -52,6 +93,16 @@ function getChildren(tile) {
     ];
 }
 
+/**
+ * Get the tile one zoom level lower
+ *
+ * @name getParent
+ * @param {Array<number>} tile
+ * @returns {Array<number>} tile
+ * @example
+ * var tile = getParent([5, 10, 10])
+ * //=tile
+ */
 function getParent(tile) {
     // top left
     if (tile[0] % 2 === 0 && tile[1] % 2 === 0) {
@@ -73,6 +124,16 @@ function getSiblings(tile) {
     return getChildren(getParent(tile));
 }
 
+/**
+ * Get the 3 sibling tiles for a tile
+ *
+ * @name getSiblings
+ * @param {Array<number>} tile
+ * @returns {Array<Array<number>>} tiles
+ * @example
+ * var tiles = getSiblings([5, 10, 10])
+ * //=tiles
+ */
 function hasSiblings(tile, tiles) {
     var siblings = getSiblings(tile);
     for (var i = 0; i < siblings.length; i++) {
@@ -81,6 +142,23 @@ function hasSiblings(tile, tiles) {
     return true;
 }
 
+/**
+ * Check to see if an array of tiles contains a particular tile
+ *
+ * @name hasTile
+ * @param {Array<Array<number>>} tiles
+ * @param {Array<number>} tile
+ * @returns {boolean}
+ * @example
+ * var tiles = [
+ *     [0, 0, 5],
+ *     [0, 1, 5],
+ *     [1, 1, 5],
+ *     [1, 0, 5]
+ * ]
+ * hasTile(tiles, [0, 0, 5])
+ * //=boolean
+ */
 function hasTile(tiles, tile) {
     for (var i = 0; i < tiles.length; i++) {
         if (tilesEqual(tiles[i], tile)) return true;
@@ -88,6 +166,17 @@ function hasTile(tiles, tile) {
     return false;
 }
 
+/**
+ * Check to see if two tiles are the same
+ *
+ * @name tilesEqual
+ * @param {Array<number>} tile1
+ * @param {Array<number>} tile2
+ * @returns {boolean}
+ * @example
+ * tilesEqual([0, 1, 5], [0, 0, 5])
+ * //=boolean
+ */
 function tilesEqual(tile1, tile2) {
     return (
         tile1[0] === tile2[0] &&
@@ -96,6 +185,16 @@ function tilesEqual(tile1, tile2) {
     );
 }
 
+/**
+ * Get the quadkey for a tile
+ *
+ * @name tileToQuadkey
+ * @param {Array<number>} tile
+ * @returns {string} quadkey
+ * @example
+ * var quadkey = tileToQuadkey([0, 1, 5])
+ * //=quadkey
+ */
 function tileToQuadkey(tile) {
     var index = '';
     for (var z = tile[2]; z > 0; z--) {
@@ -108,6 +207,16 @@ function tileToQuadkey(tile) {
     return index;
 }
 
+/**
+ * Get the tile for a quadkey
+ *
+ * @name quadkeyToTile
+ * @param {string} quadkey
+ * @returns {Array<number>} tile
+ * @example
+ * var tile = quadkeyToTile('00001033')
+ * //=tile
+ */
 function quadkeyToTile(quadkey) {
     var x = 0;
     var y = 0;
@@ -126,6 +235,16 @@ function quadkeyToTile(quadkey) {
     return [x, y, z];
 }
 
+/**
+ * Get the smallest tile to cover a bbox
+ *
+ * @name bboxToTile
+ * @param {Array<number>} bbox
+ * @returns {Array<number>} tile
+ * @example
+ * var tile = bboxToTile([ -178, 84, -177, 85 ])
+ * //=tile
+ */
 function bboxToTile(bboxCoords) {
     var min = pointToTile(bboxCoords[0], bboxCoords[1], 32);
     var max = pointToTile(bboxCoords[2], bboxCoords[3], 32);
@@ -151,6 +270,17 @@ function getBboxZoom(bbox) {
     return MAX_ZOOM;
 }
 
+/**
+ * Get the precise fractional tile location for a point at a zoom level
+ *
+ * @name pointToTileFraction
+ * @param {number} lon
+ * @param {number} lat
+ * @param {number} z
+ * @returns {Array<number>} tile fraction
+ * var tile = pointToTileFraction(30.5, 50.5, 15)
+ * //=tile
+ */
 function pointToTileFraction(lon, lat, z) {
     var sin = Math.sin(lat * d2r),
         z2 = Math.pow(2, z),
