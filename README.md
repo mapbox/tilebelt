@@ -50,3 +50,9 @@ npm test
 ```bash
 npm run bench
 ```
+
+## typescript
+
+```bash
+npm install --save @types/tilebelt
+```
