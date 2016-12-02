@@ -1,5 +1,5 @@
 {
-  "name": "tilebelt",
+  "name": "@mapbox/tilebelt",
   "version": "1.0.1",
   "description": "simple tile utilities",
   "main": "index.js",
