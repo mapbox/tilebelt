@@ -7,13 +7,13 @@ simple [tile](http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) utilities
 ## install
 
 ```bash
-npm install tilebelt
+npm install @mapbox/tilebelt
 ```
 
 ## usage
 
 ```js
-var tilebelt = require('tilebelt');
+var tilebelt = require('@mapbox/tilebelt');
 
 var tile = [10,15,8] // x,y,z
 
