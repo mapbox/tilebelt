@@ -192,3 +192,9 @@ test('pointToTileFraction', function (t) {
     t.equal(tile[2], 9);
     t.end();
 });
+
+test('point to tile -- max longitude', function (t) {
+    var tile = tilebelt.pointToTile(180, 0, 0);
+    t.deepEqual(tile, [0, 0, 0]);
+    t.end();
+});
