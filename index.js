@@ -104,20 +104,7 @@ function getChildren(tile) {
  * //=tile
  */
 function getParent(tile) {
-    // top left
-    if (tile[0] % 2 === 0 && tile[1] % 2 === 0) {
-        return [tile[0] / 2, tile[1] / 2, tile[2] - 1];
-    }
-    // bottom left
-    if ((tile[0] % 2 === 0) && (!tile[1] % 2 === 0)) {
-        return [tile[0] / 2, (tile[1] - 1) / 2, tile[2] - 1];
-    }
-    // top right
-    if ((!tile[0] % 2 === 0) && (tile[1] % 2 === 0)) {
-        return [(tile[0] - 1) / 2, (tile[1]) / 2, tile[2] - 1];
-    }
-    // bottom right
-    return [(tile[0] - 1) / 2, (tile[1] - 1) / 2, tile[2] - 1];
+    return [tile[0] >> 1, tile[1] >> 1, tile[2] - 1];
 }
 
 function getSiblings(tile) {
