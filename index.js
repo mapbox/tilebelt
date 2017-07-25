@@ -290,7 +290,7 @@ function pointToTileFraction(lon, lat, z) {
 }
 
 /**
- * Wrap Tile -- Handles tiles which crosses the 180th meridian or 90th parallel
+ * Wrap Tile -- Handles tiles which crosses the 180th meridian
  *
  * @param {[number, number, number]} tile Tile
  * @param {number} zoom Zoom Level
