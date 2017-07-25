@@ -192,3 +192,17 @@ test('pointToTileFraction', function (t) {
     t.equal(tile[2], 9);
     t.end();
 });
+
+test('pointToTile -- cross meridian', function (t) {
+    // X axis
+    t.deepEqual(tilebelt.pointToTile(-180, 85, 2), [0, 0, 2], '[-180, 85] zoom 2')
+    t.deepEqual(tilebelt.pointToTile(180, 85, 2), [0, 0, 2], '[+180, 85] zoom 2')
+    t.deepEqual(tilebelt.pointToTile(-185, 85, 2), [3, 0, 2], '[-185, 85] zoom 2')
+    t.deepEqual(tilebelt.pointToTile(185, 85, 2), [0, 0, 2], '[+185, 85] zoom 2')
+
+    // Y axis
+    // Does not wrap Tile Y
+    t.deepEqual(tilebelt.pointToTile(-175, -95, 2), [0, 3, 2], '[-175, -95] zoom 2')
+    t.deepEqual(tilebelt.pointToTile(-175, 95, 2), [0, 0, 2], '[-175, +95] zoom 2')
+    t.end()
+})
