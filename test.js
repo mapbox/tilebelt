@@ -195,6 +195,7 @@ test('pointToTileFraction', function (t) {
 
 test('pointToTile -- cross meridian', function (t) {
     // X axis
+    t.deepEqual(tilebelt.pointToTile(-180, 0, 0), [0, 0, 0], '[-180, 0] zoom 0')
     t.deepEqual(tilebelt.pointToTile(-180, 85, 2), [0, 0, 2], '[-180, 85] zoom 2')
     t.deepEqual(tilebelt.pointToTile(180, 85, 2), [0, 0, 2], '[+180, 85] zoom 2')
     t.deepEqual(tilebelt.pointToTile(-185, 85, 2), [3, 0, 2], '[-185, 85] zoom 2')
