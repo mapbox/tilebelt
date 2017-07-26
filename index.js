@@ -286,40 +286,11 @@ function pointToTileFraction(lon, lat, z) {
         z2 = Math.pow(2, z),
         x = z2 * (lon / 360 + 0.5),
         y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
-    return wrapTile([x, y, z]);
-}
 
-/**
- * Wrap Tile -- Handles tiles which crosses the 180th meridian
- *
- * @param {[number, number, number]} tile Tile
- * @param {number} zoom Zoom Level
- * @returns {[number, number, number]} Wrapped Tile
- * @example
- * wrapTile([0, 3, 2])
- * //= [0, 3, 2] -- Valid Tile X
- * wrapTile([4, 2, 2])
- * //= [0, 2, 2] -- Tile X 4 does not exist, wrap around to TileX=0
- */
-function wrapTile(tile) {
-    var tx = tile[0]
-    var ty = tile[1]
-    var zoom = tile[2]
-
-    // Maximum tile allowed
-    // zoom 0 => 1
-    // zoom 1 => 2
-    // zoom 2 => 4
-    // zoom 3 => 8
-    var maxTile = Math.pow(2, zoom)
-
-    // Handle Tile X
-    tx = tx % maxTile
-    if (tx < 0) tx = tx + maxTile
-
-    // Handle Tile Y
-    // Do not wrap Tile Y
-    return [tx, ty, zoom]
+    // Wrap Tile X
+    x = x % z2
+    if (x < 0) x = x + z2
+    return [x, y, z];
 }
 
 module.exports = {
