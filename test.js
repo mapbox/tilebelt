@@ -192,3 +192,25 @@ test('pointToTileFraction', function (t) {
     t.equal(tile[2], 9);
     t.end();
 });
+
+test('pointToTile -- cross meridian', function (t) {
+    // X axis
+    // https://github.com/mapbox/tile-cover/issues/75
+    // https://github.com/mapbox/tilebelt/pull/32
+    t.deepEqual(tilebelt.pointToTile(-180, 0, 0), [0, 0, 0], '[-180, 0] zoom 0');
+    t.deepEqual(tilebelt.pointToTile(-180, 85, 2), [0, 0, 2], '[-180, 85] zoom 2');
+    t.deepEqual(tilebelt.pointToTile(180, 85, 2), [0, 0, 2], '[+180, 85] zoom 2');
+    t.deepEqual(tilebelt.pointToTile(-185, 85, 2), [3, 0, 2], '[-185, 85] zoom 2');
+    t.deepEqual(tilebelt.pointToTile(185, 85, 2), [0, 0, 2], '[+185, 85] zoom 2');
+
+    // Y axis
+    // Does not wrap Tile Y
+    t.deepEqual(tilebelt.pointToTile(-175, -95, 2), [0, 3, 2], '[-175, -95] zoom 2');
+    t.deepEqual(tilebelt.pointToTile(-175, 95, 2), [0, 0, 2], '[-175, +95] zoom 2');
+    t.deepEqual(tilebelt.pointToTile(-175, 95, 2), [0, 0, 2], '[-175, +95] zoom 2');
+
+    // BBox
+    // https://github.com/mapbox/tilebelt/issues/12
+    t.deepEqual(tilebelt.bboxToTile([-0.000001, -85, 1000000, 85]), [0, 0, 0]);
+    t.end();
+});
