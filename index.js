@@ -288,12 +288,8 @@ function pointToTileFraction(lon, lat, z) {
  * @param {Array<number>} bbox
  * @returns {Feature<Point>}
  * @example
- * var point = tileToCenterPoint([ -178, 84, -177, 85 ])
- * //=tile
- * @param {Array<number>} tile
- * @returns {Array<number>} tile fraction
- * var tile = pointToTileFraction(30.5, 50.5, 15)
- * //=tile
+ * var point = tileToCenterPoint([0,0,10])
+ * //= point
  */
 
 function tileToCenterPoint(tile) {
