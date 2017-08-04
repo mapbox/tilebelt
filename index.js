@@ -280,6 +280,33 @@ function pointToTileFraction(lon, lat, z) {
     return [x, y, z];
 }
 
+
+/**
+ * Get the center of a tile as Point GeoJSON
+ *
+ * @name tileToCenterPoint
+ * @param {Array<number>} bbox
+ * @returns {Feature<Point>}
+ * @example
+ * var point = tileToCenterPoint([ -178, 84, -177, 85 ])
+ * //=tile
+ * @param {Array<number>} tile
+ * @returns {Array<number>} tile fraction
+ * var tile = pointToTileFraction(30.5, 50.5, 15)
+ * //=tile
+ */
+
+function tileToCenterPoint(tile) {
+    var bbox = tileToBBOX(tile)
+
+    return {type: 'Point',
+            coordinates: [
+                (bbox[0] + bbox[2]) / 2,
+                (bbox[1] + bbox[3]) / 2
+            ]
+          }
+}
+
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
     tileToBBOX: tileToBBOX,
@@ -293,5 +320,6 @@ module.exports = {
     quadkeyToTile: quadkeyToTile,
     pointToTile: pointToTile,
     bboxToTile: bboxToTile,
-    pointToTileFraction: pointToTileFraction
+    pointToTileFraction: pointToTileFraction,
+    tileToCenterPoint: tileToCenterPoint
 };

@@ -214,3 +214,17 @@ test('pointToTile -- cross meridian', function (t) {
     t.deepEqual(tilebelt.bboxToTile([-0.000001, -85, 1000000, 85]), [0, 0, 0]);
     t.end();
 });
+
+test('tile to center point', function (t) {
+    var tile = tilebelt.pointToTile(0, 0, 10);
+    var center = tilebelt.tileToCenterPoint(tile)
+    t.deepEqual(center,
+      { type: 'Point', coordinates: [0.17578125, -0.17578014699614353]})
+
+    var center2 = tilebelt.tileToCenterPoint(tilebelt.quadkeyToTile('300000000000000'))
+    t.deepEqual(center2,
+      { type: 'Point', coordinates: [0.0054931640625, -0.005493164028840922]}
+    )
+
+    t.end();
+});
