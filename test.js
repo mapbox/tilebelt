@@ -9,6 +9,13 @@ test('tile to geojson', function (t) {
     var geojson = tilebelt.tileToGeoJSON(tile1);
     t.ok(geojson, 'get geojson representation of tile');
     t.equal(geojson.type, 'Polygon');
+    t.deepEqual(geojson.coordinates, [[
+        [-178.2421875, 84.73838712095339],
+        [-178.2421875, 84.7060489350415],
+        [-177.890625, 84.7060489350415],
+        [-177.890625, 84.73838712095339],
+        [-178.2421875, 84.73838712095339]
+    ]], 'Coordinates');
     t.end();
 });
 
