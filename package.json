@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/mapbox/tilebelt",
   "devDependencies": {
+    "@types/geojson": "^7946.0.7",
     "benchmark": "~2.1.4",
     "eslint": "^7.8.1",
     "eslint-config-mourner": "~2.0.3",
