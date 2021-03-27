@@ -160,4 +160,15 @@ declare module '@mapbox/tilebelt' {
      * //=tile
      */
     export function pointToTileFraction(lon: number, lat: number, zoom: number): Tile;
+    
+    /**
+     * Get the 8 neighbors surrounding a tile
+     *
+     * @name getNeighbors
+     * @param {Array<number>} tile
+     * @returns {Array<Array<number>>} tiles
+     * var tiles = getNeighbors([5, 10, 10])
+     * //=tiles
+     */
+    export function getNeighbors(tile: Tile): Tile[]
 }

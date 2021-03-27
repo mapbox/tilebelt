@@ -65,6 +65,12 @@ new Benchmark.Suite()
     .add('pointToTileFraction#tile2', function () {
         tilebelt.pointToTileFraction(558004.8, 363898.8, 20);
     })
+    .add('getNeighbors#tile1', function () {
+        tilebelt.getNeighbors(tile1);
+    })
+    .add('getNeighbors#tile2', function () {
+        tilebelt.getNeighbors(tile2);
+    })
     .on('error', function (event) {
         console.log(event.target.error);
     })
