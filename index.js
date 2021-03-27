@@ -307,6 +307,39 @@ function getNeighbors(tile) {
     ];
 }
 
+/**
+ * Generates the GeoJSON FeatureCollection from an array or tiles
+ *
+ * @name tilesToFeatureCollection
+ * @param {Array<Array<number>>} tiles
+ * @returns {FeatureCollection} featureCollection
+ * var tiles = [
+ *     [0, 0, 5],
+ *     [0, 1, 5],
+ *     [1, 1, 5],
+ *     [1, 0, 5]
+ * ]
+ * var featureCollection = tilesToFeatureCollection(tiles)
+ * //=featureCollection
+ */
+function tilesToFeatureCollection(tiles) {
+    const collection = {
+        type: "FeatureCollection",
+        features: []
+    };
+
+    for (let  i = 0; i < tiles.length; i++) {
+        const geometry = tileToGeoJSON(tiles[i]);
+        collection.features.push({
+            type: "Feature",
+            geometry: geometry,
+            properties: null
+        })
+    }
+
+    return collection;
+}
+
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
     tileToBBOX: tileToBBOX,
@@ -321,5 +354,6 @@ module.exports = {
     pointToTile: pointToTile,
     bboxToTile: bboxToTile,
     pointToTileFraction: pointToTileFraction,
-    getNeighbors: getNeighbors
+    getNeighbors: getNeighbors,
+    tilesToFeatureCollection: tilesToFeatureCollection
 };

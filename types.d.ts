@@ -1,5 +1,5 @@
 declare module '@mapbox/tilebelt' {
-    import { BBox, Geometry } from "geojson";
+    import { BBox, FeatureCollection, Geometry } from "geojson";
 
     export type Tile = [number, number, number]; // [x, y, z]
 
@@ -160,7 +160,7 @@ declare module '@mapbox/tilebelt' {
      * //=tile
      */
     export function pointToTileFraction(lon: number, lat: number, zoom: number): Tile;
-    
+
     /**
      * Get the 8 neighbors surrounding a tile
      *
@@ -171,4 +171,21 @@ declare module '@mapbox/tilebelt' {
      * //=tiles
      */
     export function getNeighbors(tile: Tile): Tile[]
+
+    /**
+     * Generates the GeoJSON FeatureCollection from an array or tiles
+     *
+     * @name tilesToFeatureCollection
+     * @param {Array<Array<number>>} tiles
+     * @returns {FeatureCollection} featureCollection
+     * var tiles = [
+     *     [0, 0, 5],
+     *     [0, 1, 5],
+     *     [1, 1, 5],
+     *     [1, 0, 5]
+     * ]
+     * var featureCollection = tilesToFeatureCollection(tiles)
+     * //=featureCollection
+     */
+    export function tilesToFeatureCollection(tiles: Tile[]): FeatureCollection
 }
