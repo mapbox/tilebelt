@@ -280,6 +280,66 @@ function pointToTileFraction(lon, lat, z) {
     return [x, y, z];
 }
 
+/**
+ * Get the 8 neighbors surrounding a tile
+ *
+ * @name getNeighbors
+ * @param {Array<number>} tile
+ * @returns {Array<Array<number>>} tiles
+ * @example
+ * var tiles = getNeighbors([5, 10, 10])
+ * //=tiles
+ */
+function getNeighbors(tile) {
+    const x = tile[0];
+    const y = tile[1];
+    const z = tile[2];
+
+    return [
+        [x - 1, y - 1, z], // NW
+        [x, y - 1, z], // N
+        [x + 1, y - 1, z], // NE
+        [x + 1, y, z], // E
+        [x + 1, y + 1, z], // SE
+        [x, y + 1, z], // S
+        [x - 1, y + 1, z], //SW
+        [x - 1, y, z], // W
+    ];
+}
+
+/**
+ * Generates the GeoJSON FeatureCollection from an array or tiles
+ *
+ * @name tilesToFeatureCollection
+ * @param {Array<Array<number>>} tiles
+ * @returns {FeatureCollection} featureCollection
+ * var tiles = [
+ *     [0, 0, 5],
+ *     [0, 1, 5],
+ *     [1, 1, 5],
+ *     [1, 0, 5]
+ * ]
+ * var featureCollection = tilesToFeatureCollection(tiles)
+ * //=featureCollection
+ */
+function tilesToFeatureCollection(tiles) {
+    const collection = {
+        type: "FeatureCollection",
+        features: []
+    };
+
+    for (let  i = 0; i < tiles.length; i++) {
+        const geometry = tileToGeoJSON(tiles[i]);
+        collection.features.push({
+            type: "Feature",
+            geometry: geometry,
+            properties: null
+        })
+    }
+
+    return collection;
+}
+
 module.exports = {
     tileToGeoJSON: tileToGeoJSON,
     tileToBBOX: tileToBBOX,
@@ -293,5 +353,7 @@ module.exports = {
     quadkeyToTile: quadkeyToTile,
     pointToTile: pointToTile,
     bboxToTile: bboxToTile,
-    pointToTileFraction: pointToTileFraction
+    pointToTileFraction: pointToTileFraction,
+    getNeighbors: getNeighbors,
+    tilesToFeatureCollection: tilesToFeatureCollection
 };
