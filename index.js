@@ -107,12 +107,8 @@ function getParent(tile) {
     return [tile[0] >> 1, tile[1] >> 1, tile[2] - 1];
 }
 
-function getSiblings(tile) {
-    return getChildren(getParent(tile));
-}
-
 /**
- * Get the 3 sibling tiles for a tile
+ * Get the 3 sibling tiles for a tile, including itself
  *
  * @name getSiblings
  * @param {Array<number>} tile
@@ -120,6 +116,27 @@ function getSiblings(tile) {
  * @example
  * var tiles = getSiblings([5, 10, 10])
  * //=tiles
+ */
+function getSiblings(tile) {
+    return getChildren(getParent(tile));
+}
+
+/**
+ * Check to see if array of tiles contains all siblings, including itself
+ *
+ * @name hasSiblings
+ * @param {Array<number>} tile
+ * @param {Array<Array<number>>} tile
+ * @returns {boolean}
+ * @example
+ * var tiles = [
+ *     [0, 0, 5],
+ *     [0, 1, 5],
+ *     [1, 0, 5],
+ *     [1, 1, 5]
+ * ]
+ * hasSiblings([0, 1, 5], tiles)
+ * //=boolean
  */
 function hasSiblings(tile, tiles) {
     var siblings = getSiblings(tile);
