@@ -1,18 +1,9 @@
+import type { BBox, Geometry } from 'geojson';
+
 const d2r = Math.PI / 180;
 const r2d = 180 / Math.PI;
 
 export type Tile = [number, number, number];
-export type BBox = [number, number, number, number];
-export interface Geometry {
-  type:
-    | 'Point'
-    | 'LineString'
-    | 'Polygon'
-    | 'MultiPoint'
-    | 'MultiLineString'
-    | 'MultiPolygon';
-  coordinates: number[][][];
-}
 
 function tile2lon(x: number, z: number): number {
   return (x / Math.pow(2, z)) * 360 - 180;
