@@ -11,7 +11,7 @@ const bbox2 = tilebelt.tileToBBOX(tile2);
 
 const bench = new Benchmark('tilebelt');
 bench
-  .createSuite('suite', { time: 1000 })
+  .createSuite('tilebelt', { time: 1000 })
   .add('tileToGeoJSON#tile1', () => {
     tilebelt.tileToGeoJSON(tile1);
   })

@@ -123,11 +123,11 @@ export function getSiblings(tile: Tile): Tile[] {
  * Get the 3 sibling tiles for a tile
  *
  * const tiles = getSiblings([5, 10, 10])
- * //=tiles
+ * //=boolean
  */
-export function hasSiblings(tile: Tile, tiles: Tile[]) {
+export function hasSiblings(tile: Tile, tiles: Tile[]): boolean {
   const siblings = getSiblings(tile);
-  for (var i = 0; i < siblings.length; i++) {
+  for (let i = 0; i < siblings.length; i++) {
     if (!hasTile(tiles, siblings[i])) return false;
   }
   return true;
@@ -145,7 +145,7 @@ export function hasSiblings(tile: Tile, tiles: Tile[]) {
  * hasTile(tiles, [0, 0, 5])
  * //=boolean
  */
-export function hasTile(tiles: Tile[], tile: Tile) {
+export function hasTile(tiles: Tile[], tile: Tile): boolean {
   for (let i = 0; i < tiles.length; i++) {
     if (tilesEqual(tiles[i], tile)) return true;
   }
@@ -158,7 +158,7 @@ export function hasTile(tiles: Tile[], tile: Tile) {
  * tilesEqual([0, 1, 5], [0, 0, 5])
  * //=boolean
  */
-export function tilesEqual(tile1: Tile, tile2: Tile) {
+export function tilesEqual(tile1: Tile, tile2: Tile): boolean {
   return (
     tile1[0] === tile2[0] && tile1[1] === tile2[1] && tile1[2] === tile2[2]
   );
@@ -167,10 +167,10 @@ export function tilesEqual(tile1: Tile, tile2: Tile) {
 /**
  * Get the quadkey for a tile
  *
- * var quadkey = tileToQuadkey([0, 1, 5])
+ * const quadkey = tileToQuadkey([0, 1, 5])
  * //=quadkey
  */
-export function tileToQuadkey(tile: Tile) {
+export function tileToQuadkey(tile: Tile): string {
   let index = '';
   for (let z = tile[2]; z > 0; z--) {
     let b = 0;
@@ -185,10 +185,10 @@ export function tileToQuadkey(tile: Tile) {
 /**
  * Get the tile for a quadkey
  *
- * var tile = quadkeyToTile('00001033')
+ * const tile = quadkeyToTile('00001033')
  * //=tile
  */
-export function quadkeyToTile(quadkey: string) {
+export function quadkeyToTile(quadkey: string): Tile {
   let x = 0;
   let y = 0;
   const z = quadkey.length;
@@ -206,7 +206,7 @@ export function quadkeyToTile(quadkey: string) {
   return [x, y, z];
 }
 
-function getBboxZoom(bbox: BBox) {
+function getBboxZoom(bbox: BBox): number {
   const MAX_ZOOM = 28;
   for (let z = 0; z < MAX_ZOOM; z++) {
     const mask = 1 << (32 - (z + 1));
@@ -224,7 +224,7 @@ function getBboxZoom(bbox: BBox) {
 /**
  * Get the smallest tile to cover a bbox
  *
- * var tile = bboxToTile([ -178, 84, -177, 85 ])
+ * const tile = bboxToTile([ -178, 84, -177, 85 ])
  * //=tile
  */
 export function bboxToTile(bboxCoords: BBox): Tile {
