@@ -29,7 +29,6 @@ test('tileToBBOX', () => {
 test('getParent', () => {
   const parent = tilebelt.getParent(tile1);
   expect(parent).toStrictEqual([2, 5, 9]);
-  console.log(tilebelt.getParent([10, 15, 8]))
 });
 
 test('getSiblings', () => {
