@@ -3,14 +3,27 @@
   "version": "2.0.0",
   "description": "simple tile utilities",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "files": ["/dist"],
+  "exports": {
+      ".": {
+          "require": {
+              "default": "./dist/cjs/index.js",
+              "types": "./dist/cjs/index.d.ts"
+          },
+          "import": {
+              "default": "./dist/esm/index.js",
+              "types": "./dist/esm/index.d.ts"
+          }
+      }
+  },
   "scripts": {
     "test": "vitest --config ./vitest.config.ts --coverage run",
     "bench": "ts-node test/bench.ts",
     "format": "npx prettier src test --write --single-quote",
-    "build": "tsc -p .",
-    "prepublishOnly": "npm run build"
+    "clean": "rm -rf ./dist",
+    "build-cjs": "tsc -p . --module commonjs --outDir ./dist/cjs && echo '{\"type\": \"commonjs\"}' > ./dist/cjs/package.json",
+    "build-esm": "tsc -p . --module nodenext --outDir ./dist/esm && echo '{\"type\": \"module\"}' > ./dist/esm/package.json",
+    "build": "npm run clean && npm run build-cjs && npm run build-esm"
   },
   "repository": {
     "type": "git",
