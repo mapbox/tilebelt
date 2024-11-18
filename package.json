@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/tilebelt",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "simple tile utilities",
   "type": "module",
   "files": ["/dist"],
@@ -21,6 +21,7 @@
     "bench": "ts-node test/bench.ts",
     "format": "npx prettier src test --write --single-quote",
     "clean": "rm -rf ./dist",
+    "prepublishOnly": "npm run build",
     "build-cjs": "tsc -p . --module commonjs --outDir ./dist/cjs && echo '{\"type\": \"commonjs\"}' > ./dist/cjs/package.json",
     "build-esm": "tsc -p . --module nodenext --outDir ./dist/esm && echo '{\"type\": \"module\"}' > ./dist/esm/package.json",
     "build": "npm run clean && npm run build-cjs && npm run build-esm"
