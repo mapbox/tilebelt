@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/tilebelt",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "simple tile utilities",
   "type": "module",
   "files": [
