@@ -60,6 +60,14 @@ export function pointToTile(lon: number, lat: number, z: number): Tile {
   const tile = pointToTileFraction(lon, lat, z);
   tile[0] = Math.floor(tile[0]);
   tile[1] = Math.floor(tile[1]);
+  // Floating point rounding can land a point just west or north of a tile
+  // edge exactly on it; edges belong to the tile to their east/south.
+  if (lon >= -180 && lon < 180 && lon < tile2lon(tile[0], z)) {
+    tile[0]--;
+  }
+  if (tile[1] > 0 && lat > tile2lat(tile[1], z)) {
+    tile[1]--;
+  }
   return tile;
 }
 

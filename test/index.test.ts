@@ -162,6 +162,24 @@ test('pointToTileFraction', () => {
   expect(tile).toStrictEqual([119.552490234375, 191.47119140625, 9]);
 });
 
+test('pointToTile -- edge cases', () => {
+  // https://github.com/mapbox/tilebelt/issues/45
+  // a point just west of a tile edge belongs to the western tile
+  expect(
+    tilebelt.pointToTile(-11.250000000000002, 6.816667036613423, 8),
+  ).toStrictEqual([119, 123, 8]);
+  // a point on a tile edge belongs to the tile east of it
+  expect(tilebelt.pointToTile(-11.25, 6.816667036613423, 8)).toStrictEqual([
+    120, 123, 8,
+  ]);
+  // a point just north of a tile edge belongs to the northern tile
+  const northEdge = tilebelt.tileToBBOX([0, 123, 8])[3];
+  expect(tilebelt.pointToTile(0, northEdge + 1e-15, 8)).toStrictEqual([
+    128, 122, 8,
+  ]);
+  expect(tilebelt.pointToTile(0, northEdge, 8)).toStrictEqual([128, 123, 8]);
+});
+
 test('pointToTile -- cross meridian', () => {
   // X axis
   // https://github.com/mapbox/tile-cover/issues/75
