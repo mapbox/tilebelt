@@ -31,6 +31,13 @@ test('getParent', () => {
   expect(parent).toStrictEqual([2, 5, 9]);
 });
 
+test('getParent keeps indexes at or above 2^31', () => {
+  const tile = tilebelt.pointToTile(0, 0, 32);
+  expect(tilebelt.getParent(tile)).toStrictEqual(
+    tilebelt.pointToTile(0, 0, 31),
+  );
+});
+
 test('getSiblings', () => {
   const siblings = tilebelt.getSiblings(tile1);
   expect(siblings).toStrictEqual([

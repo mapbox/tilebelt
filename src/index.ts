@@ -103,7 +103,8 @@ export function getChildren(tile: Tile): Tile[] {
  * //=tile
  */
 export function getParent(tile: Tile): Tile {
-  return [tile[0] >> 1, tile[1] >> 1, tile[2] - 1];
+  // Floor division keeps indexes at or above 2^31. A signed shift turns those into negatives.
+  return [Math.floor(tile[0] / 2), Math.floor(tile[1] / 2), tile[2] - 1];
 }
 
 export function getSiblings(tile: Tile): Tile[] {
